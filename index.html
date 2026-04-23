@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tennessee Kickoff Classic</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --orange: #FF6B00;
+      --dark-orange: #CC5500;
+      --navy: #1A2744;
+      --dark-navy: #0F1929;
+      --light-gray: #F4F4F4;
+      --white: #FFFFFF;
+      --text-dark: #222222;
+      --text-light: #666666;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--dark-navy);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--orange);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-logo span {
+      color: var(--white);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      display: block;
+      padding: 8px 14px;
+      color: #cdd4e8;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+      background: rgba(255, 107, 0, 0.18);
+    }
+
+    .nav-links a.active {
+      color: var(--orange);
+    }
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      background:
+        linear-gradient(to bottom, rgba(15,25,41,0.72) 0%, rgba(15,25,41,0.55) 60%, rgba(15,25,41,0.85) 100%),
+        url('https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=1600&auto=format&fit=crop') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+    }
+
+    .hero-content {
+      max-width: 760px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.08;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 18px;
+    }
+
+    .hero-title span {
+      color: var(--orange);
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.80);
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--orange);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border-radius: 4px;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .hero-cta:hover {
+      background: var(--dark-orange);
+      transform: translateY(-1px);
+    }
+
+    /* ── SECTION SHARED ── */
+    section:not(#home) {
+      padding: 96px 24px;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 900;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-divider {
+      width: 56px;
+      height: 4px;
+      background: var(--orange);
+      border-radius: 2px;
+      margin-bottom: 40px;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--text-light);
+      line-height: 1.7;
+      max-width: 640px;
+      margin-bottom: 48px;
+    }
+
+    /* ── SCHEDULE ── */
+    #schedule {
+      background: var(--light-gray);
+    }
+
+    .schedule-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .schedule-card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 24px 28px;
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: center;
+      gap: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border-left: 4px solid var(--orange);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .schedule-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+    }
+
+    .schedule-date {
+      text-align: center;
+    }
+
+    .schedule-date .month {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+    }
+
+    .schedule-date .day {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1;
+    }
+
+    .schedule-date .year {
+      font-size: 0.7rem;
+      color: var(--text-light);
+    }
+
+    .schedule-info h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .schedule-info p {
+      font-size: 0.88rem;
+      color: var(--text-light);
+    }
+
+    .schedule-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .badge-upcoming { background: #e8f4fd; color: #1a73c8; }
+    .badge-completed { background: #e8f5e9; color: #2e7d32; }
+    .badge-tbd { background: #f3f3f3; color: #999; }
+
+    /* ── MEMBERS ── */
+    #members {
+      background: var(--white);
+    }
+
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .member-card {
+      background: var(--light-gray);
+      border-radius: 10px;
+      padding: 28px 20px 22px;
+      text-align: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .member-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+    }
+
+    .member-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--white);
+      font-size: 1.4rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+
+    .member-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .member-handicap {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .member-handicap strong {
+      color: var(--orange);
+    }
+
+    /* ── HANDICAP FORMAT ── */
+    #handicap-format {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    #handicap-format .section-title {
+      color: var(--white);
+    }
+
+    #handicap-format .section-desc {
+      color: rgba(255,255,255,0.70);
+    }
+
+    .format-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .format-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 28px 24px;
+      transition: background 0.2s;
+    }
+
+    .format-card:hover {
+      background: rgba(255,107,0,0.12);
+    }
+
+    .format-icon {
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+    }
+
+    .format-card h3 {
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+
+    .format-card p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.65;
+    }
+
+    /* ── RULES ── */
+    #rules {
+      background: var(--light-gray);
+    }
+
+    .rules-list {
+      list-style: none;
+      display: grid;
+      gap: 16px;
+      max-width: 820px;
+    }
+
+    .rules-list li {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 20px 24px 20px 68px;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      font-size: 0.95rem;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .rules-list li::before {
+      content: attr(data-num);
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 32px;
+      height: 32px;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 0.82rem;
+      font-weight: 800;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rules-list li strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark-navy);
+      color: rgba(255,255,255,0.50);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.83rem;
+    }
+
+    footer span {
+      color: var(--orange);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--dark-navy);
+        flex-direction: column;
+        padding: 12px 16px 20px;
+        gap: 2px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      }
+
+      .nav-links.open { display: flex; }
+
+      .nav-links a { font-size: 0.92rem; padding: 10px 14px; }
+
+      .hamburger { display: flex; }
+
+      .schedule-card {
+        grid-template-columns: 60px 1fr;
+        grid-template-rows: auto auto;
+      }
+
+      .schedule-badge {
+        grid-column: 2;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-logo">Tennessee <span>Kickoff Classic</span></div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#schedule">Schedule</a></li>
+        <li><a href="#members">Members</a></li>
+        <li><a href="#handicap-format">Handicap Format</a></li>
+        <li><a href="#rules">Rules</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <section id="home">
+    <div class="hero-content">
+      <div class="hero-badge">Annual Golf Tournament</div>
+      <h1 class="hero-title">Tennessee<br /><span>Kickoff Classic</span></h1>
+      <p class="hero-subtitle">
+        Where friends compete, rivalries are forged, and every round tells a story.
+        Welcome to Tennessee's premier classic golf event.
+      </p>
+      <a href="#schedule" class="hero-cta">View Schedule ↓</a>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section id="schedule">
+    <div class="section-inner">
+      <div class="section-label">Events</div>
+      <h2 class="section-title">Schedule</h2>
+      <div class="section-divider"></div>
+      <p class="section-desc">
+        All rounds tee off at 8:00 AM unless otherwise noted. Check back for updates
+        as the season progresses.
+      </p>
+      <div class="schedule-grid">
+        <div class="schedule-card">
+          <div class="schedule-date">
+            <div class="month">May</div>
+            <div class="day">10</div>
+            <div class="year">2026</div>
+          </div>
+          <div class="schedule-info">
+            <h3>Opening Round — Nashboro Village Golf Club</h3>
+            <p>Nashville, TN &nbsp;·&nbsp; 18 Holes &nbsp;·&nbsp; Shotgun Start 8:00 AM</p>
+          </div>
+          <span class="schedule-badge badge-upcoming">Upcoming</span>
+        </div>
+
+        <div class="schedule-card">
+          <div class="schedule-date">
+            <div class="month">Jun</div>
+            <div class="day">14</div>
+            <div class="year">2026</div>
+          </div>
+          <div class="schedule-info">
+            <h3>Mid-Summer Classic — Greystone Golf Club</h3>
+            <p>Dickson, TN &nbsp;·&nbsp; 18 Holes &nbsp;·&nbsp; Shotgun Start 8:00 AM</p>
+          </div>
+          <span class="schedule-badge badge-upcoming">Upcoming</span>
+        </div>
+
+        <div class="schedule-card">
+          <div class="schedule-date">
+            <div class="month">Aug</div>
+            <div class="day">9</div>
+            <div class="year">2026</div>
+          </div>
+          <div class="schedule-info">
+            <h3>Dog Days Invitational — Bear Trace at Harrison Bay</h3>
+            <p>Harrison, TN &nbsp;·&nbsp; 18 Holes &nbsp;·&nbsp; Shotgun Start 8:00 AM</p>
+          </div>
+          <span class="schedule-badge badge-upcoming">Upcoming</span>
+        </div>
+
+        <div class="schedule-card">
+          <div class="schedule-date">
+            <div class="month">Oct</div>
+            <div class="day">3</div>
+            <div class="year">2026</div>
+          </div>
+          <div class="schedule-info">
+            <h3>Championship Round — TBD</h3>
+            <p>Location TBD &nbsp;·&nbsp; 18 Holes &nbsp;·&nbsp; Full Season Finale</p>
+          </div>
+          <span class="schedule-badge badge-tbd">TBD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMBERS -->
+  <section id="members">
+    <div class="section-inner">
+      <div class="section-label">Players</div>
+      <h2 class="section-title">Members</h2>
+      <div class="section-divider"></div>
+      <p class="section-desc">
+        The Tennessee Kickoff Classic is made up of a dedicated group of golfers
+        competing across the full season for bragging rights and the championship title.
+      </p>
+      <div class="members-grid">
+        <div class="member-card">
+          <div class="member-avatar">JD</div>
+          <div class="member-name">John Doe</div>
+          <div class="member-handicap">Handicap: <strong>8.4</strong></div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">MS</div>
+          <div class="member-name">Mike Smith</div>
+          <div class="member-handicap">Handicap: <strong>12.1</strong></div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">TW</div>
+          <div class="member-name">Tom Williams</div>
+          <div class="member-handicap">Handicap: <strong>5.7</strong></div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">BR</div>
+          <div class="member-name">Bill Robinson</div>
+          <div class="member-handicap">Handicap: <strong>18.3</strong></div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">CJ</div>
+          <div class="member-name">Chris Johnson</div>
+          <div class="member-handicap">Handicap: <strong>9.9</strong></div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">KT</div>
+          <div class="member-name">Kevin Taylor</div>
+          <div class="member-handicap">Handicap: <strong>14.6</strong></div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">DB</div>
+          <div class="member-name">Dave Brown</div>
+          <div class="member-handicap">Handicap: <strong>22.0</strong></div>
+        </div>
+        <div class="member-card">
+          <div class="member-avatar">RA</div>
+          <div class="member-name">Ryan Anderson</div>
+          <div class="member-handicap">Handicap: <strong>3.2</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HANDICAP FORMAT -->
+  <section id="handicap-format">
+    <div class="section-inner">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">Handicap Format</h2>
+      <div class="section-divider"></div>
+      <p class="section-desc">
+        The Tennessee Kickoff Classic uses a net stroke play format based on USGA
+        World Handicap System (WHS) indexes to level the playing field across all skill levels.
+      </p>
+      <div class="format-grid">
+        <div class="format-card">
+          <div class="format-icon">📋</div>
+          <h3>Course Handicap</h3>
+          <p>
+            Each player's course handicap is calculated using the USGA formula:
+            <em>Handicap Index × (Slope Rating ÷ 113) + (Course Rating − Par)</em>.
+            This is applied before each round.
+          </p>
+        </div>
+        <div class="format-card">
+          <div class="format-icon">⛳</div>
+          <h3>Net Score</h3>
+          <p>
+            A player's net score is their gross score minus their full course handicap.
+            Lowest net score wins. All strokes are taken on the hardest-rated holes
+            per the scorecard.
+          </p>
+        </div>
+        <div class="format-card">
+          <div class="format-icon">🏆</div>
+          <h3>Season Points</h3>
+          <p>
+            Points are awarded each round based on net finishing position.
+            1st place earns 10 pts, 2nd earns 8 pts, 3rd earns 6 pts, and so on.
+            The season champion holds the most cumulative points.
+          </p>
+        </div>
+        <div class="format-card">
+          <div class="format-icon">🔄</div>
+          <h3>Handicap Updates</h3>
+          <p>
+            Handicap indexes are updated after each round using posted scores.
+            The most current USGA index on file as of the day of the event
+            will be used — no exceptions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RULES -->
+  <section id="rules">
+    <div class="section-inner">
+      <div class="section-label">Official</div>
+      <h2 class="section-title">Rules</h2>
+      <div class="section-divider"></div>
+      <p class="section-desc">
+        All play is governed by the USGA Rules of Golf with the local rules listed below.
+        In the event of a dispute, the Tournament Committee's ruling is final.
+      </p>
+      <ul class="rules-list">
+        <li data-num="1">
+          <strong>USGA Rules Apply</strong>
+          All play is conducted under the current USGA Rules of Golf unless modified by a local rule stated on the official scorecard.
+        </li>
+        <li data-num="2">
+          <strong>Pace of Play</strong>
+          Groups are expected to maintain pace with the group ahead. A group falling more than one hole behind will receive a warning; repeated delays may result in a one-stroke penalty.
+        </li>
+        <li data-num="3">
+          <strong>Ready Golf</strong>
+          Ready golf is encouraged throughout the round. Out-of-turn play is permitted in the interest of pace and will not result in a penalty.
+        </li>
+        <li data-num="4">
+          <strong>Scorecards</strong>
+          All scorecards must be signed by the player and an attesting playing partner before submission. Cards submitted with errors or unsigned will be disqualified.
+        </li>
+        <li data-num="5">
+          <strong>Handicap Integrity</strong>
+          Players are responsible for maintaining an up-to-date USGA handicap index. Sandbaggers or players with manipulated indexes will be subject to disqualification at the Tournament Committee's discretion.
+        </li>
+        <li data-num="6">
+          <strong>Equipment</strong>
+          All equipment must conform to USGA standards. Maximum 14 clubs in the bag. Violation results in a two-stroke penalty per hole, maximum four strokes.
+        </li>
+        <li data-num="7">
+          <strong>Sportsmanship</strong>
+          All participants are expected to conduct themselves with courtesy and respect. The Tournament Committee reserves the right to disqualify any player for unsportsmanlike conduct.
+        </li>
+        <li data-num="8">
+          <strong>Inclement Weather</strong>
+          In the event of lightning, play is immediately suspended. Rounds canceled due to weather may be rescheduled or declared official after 9 holes at the Committee's discretion.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 <span>Tennessee Kickoff Classic</span>. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    // Close menu on link click (mobile)
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('open'));
+    });
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const links = document.querySelectorAll('.nav-links a');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          links.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+
+</body>
+</html>
