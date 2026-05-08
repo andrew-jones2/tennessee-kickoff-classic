@@ -618,7 +618,7 @@
       const sorted = [...rows].sort((a, b) => {
         const pa = (a.position === '' || a.position == null) ? Infinity : Number(a.position);
         const pb = (b.position === '' || b.position == null) ? Infinity : Number(b.position);
-        return pa - pb;
+        return pb - pa;
       });
       tbody.innerHTML = sorted.map(r => {
         const total = formatTotal(r.total);
