@@ -616,16 +616,33 @@
       }
 
       const sorted = [...rows].sort((a, b) => {
-        const pa = (a.position === '' || a.position == null) ? Infinity : Number(a.position);
-        const pb = (b.position === '' || b.position == null) ? Infinity : Number(b.position);
-        return pb - pa;
+        const ta = (a.total === '' || a.total == null) ? -Infinity : Number(a.total);
+        const tb = (b.total === '' || b.total == null) ? -Infinity : Number(b.total);
+        return tb - ta;
       });
-      tbody.innerHTML = sorted.map(r => {
+
+      const ranked = [];
+      for (let i = 0; i < sorted.length; i++) {
+        const r = sorted[i];
+        const t = Number(r.total);
+        let pos;
+        if (!Number.isFinite(t)) {
+          pos = null;
+        } else if (i === 0) {
+          pos = 1;
+        } else {
+          const prevT = Number(sorted[i - 1].total);
+          pos = (t === prevT) ? ranked[i - 1]._pos : i + 1;
+        }
+        ranked.push({ ...r, _pos: pos });
+      }
+
+      tbody.innerHTML = ranked.map(r => {
         const total = formatTotal(r.total);
-        const pos = r.position === '' || r.position == null ? '–' : escapeHtml(r.position);
+        const posStr = r._pos != null ? String(r._pos) : '–';
         return `
-          <tr data-rank="${escapeHtml(r.position)}">
-            <td class="pos-cell"><span class="pos-badge">${pos}</span></td>
+          <tr data-rank="${posStr}">
+            <td class="pos-cell"><span class="pos-badge">${escapeHtml(posStr)}</span></td>
             <td class="name-cell">${escapeHtml(r.name)}</td>
             <td class="total-cell ${total.cls}">${total.text}</td>
           </tr>`;
