@@ -615,7 +615,12 @@
         return;
       }
 
-      tbody.innerHTML = rows.map(r => {
+      const sorted = [...rows].sort((a, b) => {
+        const pa = (a.position === '' || a.position == null) ? Infinity : Number(a.position);
+        const pb = (b.position === '' || b.position == null) ? Infinity : Number(b.position);
+        return pa - pb;
+      });
+      tbody.innerHTML = sorted.map(r => {
         const total = formatTotal(r.total);
         const pos = r.position === '' || r.position == null ? '–' : escapeHtml(r.position);
         return `
